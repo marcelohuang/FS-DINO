@@ -1,0 +1,34 @@
+model:
+  dino_model: dinov2_vitb14
+  dino_block_idx: 2
+  dino_norm: true
+  sam_checkpoint: /home/defaultuser/checkpoints/sam_vit_h_4b8939.pth
+  sam_model_type: vit_h
+  align_mode: upsample_student
+
+data:
+  manifest: /home/defaultuser/FS-DINO/manifests/sa1b_1k.txt
+  image_root: /home/defaultuser/sa1b_images
+  train_frac: 0.9
+  target_res: 252
+  sam_res: 1024
+  num_workers: 0
+  pin_memory: true
+
+training:
+  batch_size: 1
+  lr: 1.0e-3
+  weight_decay: 0.05
+  epochs: 15
+  warmup_epochs: 1
+  seed: 42
+  grad_clip: 1.0
+  deterministic: true
+
+output:
+  checkpoint_dir: checkpoints/stage1_252
+  log_dir: logs/stage1_252
+  log_every: 50
+  val_every: 1
+  save_every: 5
+  resume_from: checkpoints/stage1_126/best.pt
